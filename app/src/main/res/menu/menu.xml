@@ -5,7 +5,7 @@
     >
 <item
     android:id="@+id/action_CreateMember"
-    android:title="Create Member"
-    app:showAsAction="always"
+    android:title="@string/Settings_name"
+    app:showAsAction="never"
     />
 </menu>
