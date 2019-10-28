@@ -9,88 +9,105 @@
     android:background="@color/white"
     tools:context="com.drund.viewsrequestsdemo.activities.MainActivity"
     >
-    <LinearLayout
-        android:id="@+id/empDetailsLayout"
+
+    <ScrollView
+        android:id="@+id/scrollMainActivity"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         >
 
         <LinearLayout
-            android:id="@+id/empBasicLayout"
+            android:id="@+id/layoutMainContiner"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
             <LinearLayout
-                android:id="@+id/empBasicHLayout"
+                android:id="@+id/empDetailsLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
                 >
 
-                <ImageView
-                    android:id="@+id/default_img"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/default_avatar"
-                    />
+                <LinearLayout
+                    android:id="@+id/empBasicLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:orientation="vertical"
+                    >
+
+                    <LinearLayout
+                        android:id="@+id/empBasicHLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        >
+
+                        <ImageView
+                            android:id="@+id/default_img"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/default_avatar"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/empNameLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:id="@+id/display_name"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Employee Name"
+                                android:textColor="#000000"
+                                android:textSize="18sp"
+                                />
+
+                            <TextView
+                                android:id="@+id/job_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="New Job Title"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/empNameLayout"
+                    android:id="@+id/empDescriptionLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:orientation="vertical"
                     >
 
                     <TextView
-                        android:id="@+id/display_name"
+                        android:id="@+id/job_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Employee Name"
+                        android:layout_marginLeft="15dp"
+                        android:text="New description for testing the description text!"
                         android:textColor="#000000"
-                        android:textSize="18sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/job_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="New Job Title"
+                        android:textSize="14sp"
                         />
                 </LinearLayout>
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="370dp"
+                    android:layout_height="2dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="2dp"
+                    android:background="?android:attr/listDivider"
+                    />
+
             </LinearLayout>
-
         </LinearLayout>
+    </ScrollView>
 
-        <LinearLayout
-            android:id="@+id/empDescriptionLayout"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="vertical"
-            >
-
-            <TextView
-                android:id="@+id/job_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="New description for testing the description text!"
-                android:textColor="#000000"
-                android:textSize="14sp"
-                />
-        </LinearLayout>
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="370dp"
-            android:layout_height="2dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="2dp"
-            android:background="?android:attr/listDivider"
-            />
-
-    </LinearLayout>
 </FrameLayout>
