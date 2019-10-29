@@ -1,5 +1,7 @@
 package com.drund.viewsrequestsdemo.helpers;
 
+import org.json.JSONArray;
+
 /**
  * Abstract class to enforce implementation of required callback methods.
  * <p>

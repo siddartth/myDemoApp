@@ -2,16 +2,22 @@ package com.drund.viewsrequestsdemo;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+
+import com.drund.viewsrequestsdemo.helpers.RequestSimulator;
+import com.drund.viewsrequestsdemo.helpers.RequestSimulatorCallback;
+import com.google.gson.Gson;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.drund.viewsrequestsdemo.activities.MainActivity;
-import com.drund.viewsrequestsdemo.activities.Member;
-import com.drund.viewsrequestsdemo.activities.MemberArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Create_Member extends AppCompatActivity {
     private TextInputLayout mDisplayName;
@@ -72,17 +78,39 @@ public class Create_Member extends AppCompatActivity {
             return;
         }
         //MemberArray m = new MemberArray(mDisplayName.getEditText().getText().toString().trim(), mJobTitle.getEditText().getText().toString().trim(),mDescription.getEditText().getText().toString().trim());
-        Member m = new Member();
-        m.setmName(mDisplayName.getEditText().getText().toString().trim());
-        m.setmJobTitle(mJobTitle.getEditText().getText().toString().trim());
-        m.setmDescriptionString(mDescription.getEditText().getText().toString().trim());
+
         Intent intent = new Intent(Create_Member.this, MainActivity.class);
         String input = "Display Name: "+ mDisplayName.getEditText().getText().toString().trim();
         input += "\n";
         input += "Job Title: "+ mJobTitle.getEditText().getText().toString().trim();
         input += "\n";
         input += "Description: "+ mDescription.getEditText().getText().toString().trim();
-        Toast.makeText(this,input,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,input,Toast.LENGTH_SHORT).show();
+
+        Map<String,String> request_param= new HashMap<String,String>();
+        request_param.put("display_name", mDisplayName.getEditText().getText().toString().trim());
+        request_param.put("job_title", mJobTitle.getEditText().getText().toString().trim());
+        request_param.put("description", mDescription.getEditText().getText().toString().trim());
+        RequestSimulator.post(this,request_param,"https://api.drund.com/members/create/",new RequestSimulatorCallback() {
+            public void onSuccess(String response) {
+
+                JsonParser parser = new JsonParser();
+                JsonObject json_response = (JsonObject) parser.parse(response);
+                String str = json_response.get("display_name").toString().trim();
+                json_response.get("job_title");
+                json_response.get("description");
+                Display(str);
+            }
+            public void onFailure(String response) {
+                // TODO: Handle unsuccessful request response
+            }
+        });
+
+
         startActivity(intent);
+    }
+    public void Display(String str)
+    {
+        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
     }
 }

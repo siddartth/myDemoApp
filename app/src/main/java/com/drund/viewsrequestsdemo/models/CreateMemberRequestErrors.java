@@ -25,7 +25,6 @@ public class CreateMemberRequestErrors {
         public String displayName;
         @SerializedName("job_title")
         public String jobTitle;
-        @SerializedName("job_description")
         public String description;
 
         Errors() {
