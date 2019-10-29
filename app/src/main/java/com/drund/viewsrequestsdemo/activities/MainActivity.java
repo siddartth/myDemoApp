@@ -30,15 +30,12 @@ import java.lang.reflect.Array;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String ENDPOINT_CREATE_MEMBER = "https://api.drund.com/members/create/";
     public static final String ENDPOINT_GET_MEMBERS = "https://api.drund.com/members/";
-    public static final String ENDPOINT_GET_MEMBER_HOBBIES = "https://api.drund.com/members/%d/hobbies/";
-    TextView name;
-    TextView title;
-    TextView des;
-    SimpleCursorAdapter adapter;
-    String str;
-    int j;
+    ListView lv;
+    String[] displayname={"tom","Jack","Jhon Wick", "joson Stathum"};
+    String[] jobtitle={"Android dev","IOS dev","IOS dev","Android dev"};
+    String[] description={"works well","lets check","lets check","lets check"};
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,47 +55,53 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        name = (TextView) findViewById(R.id.display_name);
-        title = (TextView) findViewById(R.id.job_title);
+        //Initiate service call to fetch data.
+        onFetchData();
+        //list view id is linked with the listView container.
 
-        onDisplay();
-
-            name.setText("Display Name.");
-            title.setText("please provide Job Title.");
-
-
-
+        //lv = findViewById(R.id.listview_main);
 
     }
-    public void onDisplay()
+
+    // Hitting the get method to get data from the URL.
+    public void onFetchData()
     {
         RequestSimulator.get(this, ENDPOINT_GET_MEMBERS, new RequestSimulatorCallback() {
 
 
        public void onSuccess(String response) {
-           JsonParser parser = new JsonParser();
-           JsonObject json = (JsonObject) parser.parse(response);
-           JsonArray Members = json.getAsJsonArray("data");
-           for(int i=0;i< 2;i++)
-           {
-               JsonObject Single_member=(JsonObject)Members.get(i);
-               name.setText(Single_member.get("display_name").toString().trim());
-               title.setText(Single_member.get("id").toString().trim());
-
-           }
-        String Str = response;
-        displayToast(Str);
+        String Str = response;//response provides a GSON string.
+           myDataParsing(Str);//calling parsing function.
      }
         @Override
         public void onFailure(String response) {
-         // TODO: Handle unsuccessful request response
                               }});
 
     }
-    public void displayToast(String Str)
+
+    //To create the Json object into Array.
+
+    public void myDataParsing(String Str)
     {
-        des = (TextView) findViewById(R.id.job_description);
-        des.setText(Str);
-        Toast.makeText(this,Str,Toast.LENGTH_LONG).show();
+        //creating json parsing object.
+        JsonParser parser = new JsonParser();
+        //json object to store the parsed response.
+        JsonObject json = (JsonObject) parser.parse(Str);
+        //storing the data[] into the a json Array.
+        JsonArray Members = json.getAsJsonArray("data");
+
+        /* Using a for loop to fetch each of the Display_name - Job_Title - Description and updating them in an Array. */
+        //for(int i=0;i<Members.size();i++)
+        //{
+            JsonObject Single_member = (JsonObject)Members.get(3);
+            //displayname[0]=Single_member.get("display_name").toString().trim();
+            //jobtitle[0]=Single_member.get("job_title").toString().trim();
+            //description[0]=Single_member.get("description").toString().trim();
+        //}
+        // toast to check the if the values are properly stored.
+        Toast.makeText(this,"Display name : "+Single_member.get("display_name").toString().trim()+"jobtitle : "+Single_member.get("job_title").toString().trim()+"display name 2: "+Single_member.get("description").toString().trim(),Toast.LENGTH_LONG).show();
+        /*CustomListView customListView;
+        customListView = new CustomListView(this, displayname,jobtitle,description);
+        lv.setAdapter(customListView);*/
     }
 }
