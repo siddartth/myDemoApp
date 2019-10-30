@@ -9,6 +9,9 @@ import com.drund.viewsrequestsdemo.helpers.RequestSimulator;
 import com.drund.viewsrequestsdemo.helpers.RequestSimulatorCallback;
 import com.google.gson.Gson;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,15 +22,29 @@ import com.google.gson.JsonParser;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Create_Member extends AppCompatActivity {
+public class CreateMember extends AppCompatActivity {
     private TextInputLayout mDisplayName;
     private TextInputLayout mJobTitle;
     private TextInputLayout mDescription;
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.backarrow, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent= new Intent(CreateMember.this,MainActivity.class );
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create__member);
+        setContentView(R.layout.activity_create_member);
 
         mDisplayName = findViewById(R.id.text_display_name);
         mJobTitle = findViewById(R.id.text_job_Title);
@@ -63,12 +80,12 @@ public class Create_Member extends AppCompatActivity {
     {
         String description = mDescription.getEditText().getText().toString().trim();
         if(description.isEmpty()){
-        mDescription.setError("This field is required.");
+            mDescription.setError("This field is required.");
             return false;
         }
         else {
-        mDescription.setError(null);
-        mDescription.setErrorEnabled(false);
+            mDescription.setError(null);
+            mDescription.setErrorEnabled(false);
             return true;
         }
     }
@@ -79,7 +96,7 @@ public class Create_Member extends AppCompatActivity {
         }
         //MemberArray m = new MemberArray(mDisplayName.getEditText().getText().toString().trim(), mJobTitle.getEditText().getText().toString().trim(),mDescription.getEditText().getText().toString().trim());
 
-        Intent intent = new Intent(Create_Member.this, MainActivity.class);
+        Intent intent = new Intent(CreateMember.this, MainActivity.class);
         String input = "Display Name: "+ mDisplayName.getEditText().getText().toString().trim();
         input += "\n";
         input += "Job Title: "+ mJobTitle.getEditText().getText().toString().trim();
@@ -102,15 +119,17 @@ public class Create_Member extends AppCompatActivity {
                 Display(str);
             }
             public void onFailure(String response) {
-                // TODO: Handle unsuccessful request response
             }
         });
 
-
         startActivity(intent);
+        //intent.setExtrasClassLoader();
     }
     public void Display(String str)
     {
+
         Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+
     }
 }
+
