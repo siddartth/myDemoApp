@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.drund.viewsrequestsdemo.CreateMember;
 import com.drund.viewsrequestsdemo.R;
@@ -17,6 +18,9 @@ import com.drund.viewsrequestsdemo.helpers.RequestSimulatorCallback;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent= new Intent(MainActivity.this, CreateMember.class);
+        intent.putExtra("caller", "Activity_Main");
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }
@@ -48,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(TAG,"MainActivity: invoked.");
+
+        Log.d(TAG, "MainActivity: invoked.");
         onFetchData();
     }
+
 
     //This method helps to hit the URL to get a response of JSON object.
     public void onFetchData()
@@ -79,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         //storing the data[] into the a json Array.
         JsonArray Members = json.getAsJsonArray("data");
 
-        String name,title,des;
         /* Using a for loop to fetch each of the Display_name - Job_Title - Description and updating them in an Array. */
         for(int i=0;i<Members.size();i++)
         {
@@ -104,4 +110,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
+
 }
+
+

@@ -8,10 +8,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateMember"
-                  android:label="@string/second_page"/>
-        <activity android:name=".activities.MainActivity"
-                  android:label="@string/first_page">
+        <activity android:name=".Hobbies"
+                  android:parentActivityName=".activities.MainActivity" ></activity>
+        <activity android:name=".NewMemberDisplay" />
+        <activity
+            android:name=".CreateMember"
+            android:label="@string/second_page"
+            android:parentActivityName=".activities.MainActivity" />
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/first_page">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

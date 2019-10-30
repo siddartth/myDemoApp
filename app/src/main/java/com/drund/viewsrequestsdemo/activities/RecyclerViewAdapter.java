@@ -18,12 +18,14 @@ import java.util.ArrayList;
 public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
+    //Array list variables created for the recyclerview.
     //private ArrayList<String> imageName =  new ArrayList<>();
     private ArrayList<String> displayName =  new ArrayList<>();
     private ArrayList<String> jobTitle =  new ArrayList<>();
     private ArrayList<String> description =  new ArrayList<>();
     private Context context;
 
+    //View adapter created.
     public RecyclerViewAdapter(ArrayList<String> displayName, ArrayList<String> jobTitle, ArrayList<String> description, Context context) {
         //this.imageName = imageName;
         this.displayName = displayName;
@@ -49,11 +51,13 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
         viewHolder.des.setText(description.get(i));
     }
 
+    //determines the number of times the row is generated.
     @Override
     public int getItemCount() {
         return displayName.size();
     }
 
+    //Creating text view and the parent layout for referencing the widget.
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView displayname;

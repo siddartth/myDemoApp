@@ -2,22 +2,14 @@ package com.drund.viewsrequestsdemo;
 
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import com.drund.viewsrequestsdemo.helpers.RequestSimulator;
 import com.drund.viewsrequestsdemo.helpers.RequestSimulatorCallback;
-import com.google.gson.Gson;
+
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-import com.drund.viewsrequestsdemo.activities.MainActivity;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,21 +18,9 @@ public class CreateMember extends AppCompatActivity {
     private TextInputLayout mDisplayName;
     private TextInputLayout mJobTitle;
     private TextInputLayout mDescription;
+    Intent mintent;
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.backarrow, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent= new Intent(CreateMember.this,MainActivity.class );
-        startActivity(intent);
-        return super.onOptionsItemSelected(item);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +76,7 @@ public class CreateMember extends AppCompatActivity {
         }
         //MemberArray m = new MemberArray(mDisplayName.getEditText().getText().toString().trim(), mJobTitle.getEditText().getText().toString().trim(),mDescription.getEditText().getText().toString().trim());
 
-        Intent intent = new Intent(CreateMember.this, MainActivity.class);
+        mintent = new Intent(CreateMember.this,NewMemberDisplay.class);
         String input = "Display Name: "+ mDisplayName.getEditText().getText().toString().trim();
         input += "\n";
         input += "Job Title: "+ mJobTitle.getEditText().getText().toString().trim();
@@ -111,24 +91,23 @@ public class CreateMember extends AppCompatActivity {
         RequestSimulator.post(this,request_param,"https://api.drund.com/members/create/",new RequestSimulatorCallback() {
             public void onSuccess(String response) {
 
-                JsonParser parser = new JsonParser();
-                JsonObject json_response = (JsonObject) parser.parse(response);
-                String str = json_response.get("display_name").toString().trim();
-                json_response.get("job_title");
-                json_response.get("description");
-                Display(str);
+                display(response);
             }
             public void onFailure(String response) {
+                mintent = new Intent(CreateMember.this,NewMemberDisplay.class);
             }
         });
 
-        startActivity(intent);
-        //intent.setExtrasClassLoader();
     }
-    public void Display(String str)
+    public void display(String response)
     {
+        mintent.putExtra("json_string",response);
+        mintent.putExtra("NewName",mDisplayName.getEditText().getText().toString().trim());
+        mintent.putExtra("NewTitle",mJobTitle.getEditText().getText().toString().trim());
+        mintent.putExtra("NewDes",mDescription.getEditText().getText().toString().trim());
 
-        Toast.makeText(this,str,Toast.LENGTH_SHORT).show();
+        startActivity(mintent);
+        Toast.makeText(this,"Added new member: " + response,Toast.LENGTH_SHORT).show();
 
     }
 }
