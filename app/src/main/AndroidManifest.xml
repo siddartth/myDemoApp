@@ -10,7 +10,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Hobbies"
                   android:parentActivityName=".activities.MainActivity" ></activity>
-        <activity android:name=".NewMemberDisplay" />
         <activity
             android:name=".CreateMember"
             android:label="@string/second_page"

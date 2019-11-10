@@ -75,27 +75,40 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //Data response is parsed and assigned to a Array-list.
-    public void dataParsing(String Str)
+    public void dataParsing(String str)
     {
         //creating json parsing object.
         JsonParser parser = new JsonParser();
-
-        //json object to store the parsed response.
-        JsonObject json = (JsonObject) parser.parse(Str);
-
-        //storing the data[] into the a json Array.
-        JsonArray Members = json.getAsJsonArray("data");
-
-        /* Using a for loop to fetch each of the Display_name - Job_Title - Description and updating them in an Array. */
-        for(int i=0;i<Members.size();i++)
+        String Str = str;
+        Intent intent= getIntent();
+        String s = intent.getStringExtra("json_string");
+        Toast.makeText(this, "This is personsal display: "+s, Toast.LENGTH_SHORT).show();
+        if(s!=null)
         {
-            JsonObject Single_member = (JsonObject)Members.get(i);
-            listname.add(Single_member.get("display_name").toString().trim());
-            listjobtitle.add(Single_member.get("job_title").getAsString());
-            listdes.add(Single_member.get("description").getAsString());
-
-
+            String na = intent.getStringExtra("NewName");
+            String titl = intent.getStringExtra("NewTitle");
+            String descri = intent.getStringExtra("NewDes");
+            listname.add(na);
+            listjobtitle.add(titl);
+            listdes.add(descri);
+                Toast.makeText(this,"this is wokring.",Toast.LENGTH_SHORT).show();
         }
+
+            //json object to store the parsed response.
+            JsonObject json = (JsonObject) parser.parse(Str);
+
+            //storing the data[] into the a json Array.
+            JsonArray Members = json.getAsJsonArray("data");
+
+            /* Using a for loop to fetch each of the Display_name - Job_Title - Description and updating them in an Array. */
+
+            for (int i = 0; i < Members.size(); i++) {
+                JsonObject Single_member = (JsonObject) Members.get(i);
+                listname.add(Single_member.get("display_name").toString().trim());
+                listjobtitle.add(Single_member.get("job_title").getAsString());
+                listdes.add(Single_member.get("description").getAsString());
+            }
+
         Log.d(TAG,"myDataParsing: value is parsed.");
 
         initRecyclerView();

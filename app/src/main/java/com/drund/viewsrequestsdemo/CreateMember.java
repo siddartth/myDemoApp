@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
+import com.drund.viewsrequestsdemo.activities.MainActivity;
 import com.drund.viewsrequestsdemo.helpers.RequestSimulator;
 import com.drund.viewsrequestsdemo.helpers.RequestSimulatorCallback;
 
@@ -76,7 +77,7 @@ public class CreateMember extends AppCompatActivity {
         }
         //MemberArray m = new MemberArray(mDisplayName.getEditText().getText().toString().trim(), mJobTitle.getEditText().getText().toString().trim(),mDescription.getEditText().getText().toString().trim());
 
-        mintent = new Intent(CreateMember.this,NewMemberDisplay.class);
+        mintent = new Intent(CreateMember.this, MainActivity.class);
         String input = "Display Name: "+ mDisplayName.getEditText().getText().toString().trim();
         input += "\n";
         input += "Job Title: "+ mJobTitle.getEditText().getText().toString().trim();
@@ -94,7 +95,7 @@ public class CreateMember extends AppCompatActivity {
                 display(response);
             }
             public void onFailure(String response) {
-                mintent = new Intent(CreateMember.this,NewMemberDisplay.class);
+                mintent = new Intent(CreateMember.this,Hobbies.class);
             }
         });
 
